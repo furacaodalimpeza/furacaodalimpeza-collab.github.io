@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Furacão da Limpeza</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #e9f3ff;
+}
+
+/* TOPO */
+header {
+  background-image: url("img/fundo-limpeza.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 220px;
+}
+
+/* ABAS */
+.abas {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px;
+}
+
+.abas button {
+  background: #fff;
+  color: #0a7cff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.abas button.ativa {
+  background: #0a7cff;
+  color: #fff;
+}
+
+/* CATEGORIAS */
+.categoria {
+  display: none;
+}
+
+.categoria.ativa {
+  display: block;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 15px;
+}
+
+h2 {
+  color: #0a7cff;
+  text-align: center;
+}
+
+/* PRODUTOS */
+.produtos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.produto {
+  background: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+  text-align: center;
+}
+
+.produto img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.produto button {
+  background: #25d366;
+  border: none;
+  color: #fff;
+  padding: 10px;
+  width: 100%;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+/* CARRINHO */
+#carrinho {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-top: 3px solid #0a7cff;
+  padding: 10px;
+  box-shadow: 0 -2px 10px rgba(0,0,0,.2);
+}
+
+#carrinho ul {
+  list-style: none;
+  padding: 0;
+  margin: 5px 0;
+}
+
+#carrinho button {
+  background: #0a7cff;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 6px;
+}
+
+/* RODAPÉ */
+footer {
+  background: #0a7cff;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 120px;
+}
+</style>
+</head>
+
+<body>
+
+<header></header>
+
+<!-- ABAS -->
+<div class="abas">
+  <button class="ativa" onclick="mostrarCategoria('banheiro', this)">Banheiro</button>
+  <button onclick="mostrarCategoria('limpeza', this)">Limpeza Geral</button>
+  <button onclick="mostrarCategoria('casa', this)">Casa</button>
+</div>
+
+<div class="container">
+
+<!-- BANHEIRO -->
+<div id="banheiro" class="categoria ativa">
+<h2>Produtos para Banheiro</h2>
+<div class="produtos">
+
+<div class="produto">
+<img src="img/desinfetante-banheiro.jpg">
+<h3>Desinfetante Banheiro</h3>
+<p>R$ 10,00</p>
+<button onclick="adicionar('Desinfetante Banheiro', 10)">Adicionar</button>
+</div>
+
+</div>
+</div>
+
+<!-- LIMPEZA GERAL -->
+<div id="limpeza" class="categoria">
+<h2>Limpeza Geral</h2>
+<div class="produtos">
+
+<div class="produto">
+<img src="img/sabao-liquido-bonrruque.jpg">
+<h3>Sabão Líquido 2L</h3>
+<p>R$ 12,00</p>
+<button onclick="adicionar('Sabão Líquido 2L', 12)">Adicionar</button>
+
+<h3>Sabão Líquido 5L</h3>
+<p>R$ 25,00</p>
+<button onclick="adicionar('Sabão Líquido 5L', 25)">Adicionar</button>
+</div>
+
+</div>
+</div>
+
+<!-- CASA -->
+<div id="casa" class="categoria">
+<h2>Casa</h2>
+<div class="produtos">
+
+<div class="produto">
+<img src="img/vassoura-de-canto.jpg">
+<h3>Vassoura de Canto</h3>
+<p>R$ 19,00</p>
+<button onclick="adicionar('Vassoura de Canto', 19)">Adicionar</button>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<!-- CARRINHO -->
+<div id="carrinho">
+<strong>Carrinho</strong>
+<ul id="lista"></ul>
+<p><strong>Total: R$ <span id="total">0</span></strong></p>
+<button onclick="finalizar()">Finalizar no WhatsApp</button>
+</div>
+
+<footer>
+<p>📞 Encomendas pelo WhatsApp</p>
+<p>📧 Também aceitamos pedidos pelo e-mail:</p>
+<strong>furacaodalimpeza027@gmail.com</strong>
+<p>© 2026 Furacão da Limpeza</p>
+</footer>
+
+<script>
+let carrinho = [];
+let total = 0;
+
+function mostrarCategoria(id, btn) {
+  document.querySelectorAll('.categoria').forEach(c => c.classList.remove('ativa'));
+  document.querySelectorAll('.abas button').forEach(b => b.classList.remove('ativa'));
+  document.getElementById(id).classList.add('ativa');
+  btn.classList.add('ativa');
+}
+
+function adicionar(nome, preco) {
+  carrinho.push({nome, preco});
+  total += preco;
+  atualizarCarrinho();
+}
+
+function atualizarCarrinho() {
+  const lista = document.getElementById('lista');
+  lista.innerHTML = '';
+  carrinho.forEach(item => {
+    const li = document.createElement('li');
+    li.textContent = `${item.nome} - R$ ${item.preco}`;
+    lista.appendChild(li);
+  });
+  document.getElementById('total').textContent = total.toFixed(2);
+}
+
+function finalizar() {
+  let msg = 'Olá! Gostaria de encomendar:%0A';
+  carrinho.forEach(i => msg += `- ${i.nome} (R$ ${i.preco})%0A`);
+  msg += `Total: R$ ${total.toFixed(2)}`;
+
+  window.open(`https://wa.me/5515996585967?text=${msg}`, '_blank');
+}
+</script>
+
+</body>
+</html>
