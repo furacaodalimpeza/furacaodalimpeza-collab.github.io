@@ -40,7 +40,7 @@ header {
   font-size: 12px;
 }
 
-..abas {
+.abas {
   display: flex;
   flex-direction: column; /* organiza em colunas, 1 linha em cima e 1 embaixo */
   align-items: center;    /* centraliza horizontalmente */
@@ -1129,16 +1129,40 @@ function mostrarCategoria(id,btn){
   document.getElementById("carrinho").classList.remove("aberto");
 }
 
-// CARREGAR NOME CLIENTE AO ABRIR
 window.onload = () => {
   if(!localStorage.getItem("nomeCliente")) {
     const novoNome = prompt("Digite o nome da cliente:");
     if(novoNome && novoNome.trim() !== "") {
-  localStorage.setItem("nomeCliente", novoNome);
-}
-
+      localStorage.setItem("nomeCliente", novoNome);
+    }
+  }
   atualizar();
 };
+
+  <script>
+// ABRIR / FECHAR CARRINHO
+function toggleCarrinho() {
+  document.getElementById("carrinho").classList.toggle("aberto");
+}
+
+// ALTERAR QUANTIDADE
+function alterarQtd(index, valor) {
+  carrinho[index].qtd += valor;
+
+  if (carrinho[index].qtd <= 0) {
+    carrinho.splice(index, 1);
+  }
+
+  atualizar();
+}
+
+// REMOVER ITEM
+function remover(index) {
+  carrinho.splice(index, 1);
+  atualizar();
+}
+</script>
+  
 </script>
 
 </body>
