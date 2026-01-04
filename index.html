@@ -233,7 +233,7 @@ h2{text-align:center;color:#0a7cff}
   </div>
   <div class="linha">
     <span>5L — R$ 13,00</span>
-    <button onclick="addProduto('Cândida 5L',1$)">Adicionar</button>
+    <button onclick="addProduto('Cândida 5L',13)">Adicionar</button>
   </div>
 </div>
 </div>
@@ -255,7 +255,7 @@ h2{text-align:center;color:#0a7cff}
 
  <div class="produto">
 <img src="img/sabao-liquido-clineza.jpg">
-<h3>Sabao Liquido Clineza</h3>
+<h3>Sabão Liquido Clineza</h3>
 <div class="variacoes">
   <div class="linha">
     <span>2L — R$ 13,00</span>
@@ -263,7 +263,7 @@ h2{text-align:center;color:#0a7cff}
   </div>
   <div class="linha">
     <span>5L — R$ 27,00</span>
-    <button onclick="addProduto('Sabao Liquido Clineza 5L',35)">Adicionar</button>
+    <button onclick="addProduto('Sabao Liquido Clineza 5L',27)">Adicionar</button>
   </div>
 </div>
 </div>
@@ -667,7 +667,7 @@ h2{text-align:center;color:#0a7cff}
 <div class="variacoes">
   <div class="linha">
     <span> R$ 90,00</span>
-    <button onclick="addProduto('Carrinho Multiuso',80)">Adicionar</button>
+    <button onclick="addProduto('Carrinho Multiuso',90)">Adicionar</button>
   </div>
 </div>
 </div>
@@ -741,40 +741,42 @@ h2{text-align:center;color:#0a7cff}
 </div>
 </div>
 
-<div class="categoria" id="essencias" style="display:none;">
+<div class="categoria" id="essencias">
   <h2>Essências</h2>
 
-  <div class="produto">
-<img src="img/essencia-lavanda.jpg">
-<h3>Essência Lavanda</h3>
-<div class="variacoes">
-  <div class="linha">
-    <span> Senalândia R$ ??</span>
-    <button onclick="addProduto('Essência Lavanda Senalândia',??)">Adicionar</button>
-  </div>
-  <div class="linha">
-    <span> Senamax R$ ??</span>
-    <button onclick="addProduto('Essência Lavanda Senamax',??)">Adicionar</button>
-  </div>
-</div>
-</div>
+  <div class="produtos">
 
-  <div class="produto">
-<img src="img/essencia-eucalipto.jpg">
-<h3>Essência Eucalipto</h3>
-<div class="variacoes">
-  <div class="linha">
-    <span> Senalândia R$ ??</span>
-    <button onclick="addProduto('Essência Eucalipto Senalândia',??)">Adicionar</button>
-  </div>
-  <div class="linha">
-    <span> Senamax R$ ??</span>
-    <button onclick="addProduto('Essência Eucalipto Senamax',??)">Adicionar</button>
-  </div>
-</div>
-p</div>
+    <div class="produto">
+      <img src="img/essencia-lavanda.jpg">
+      <h3>Essência Lavanda</h3>
+      <div class="variacoes">
+        <div class="linha">
+          <span>Senalândia — R$ 15,00</span>
+          <button onclick="addProduto('Essência Lavanda Senalândia',15)">Adicionar</button>
+        </div>
+        <div class="linha">
+          <span>Senamax — R$ 18,00</span>
+          <button onclick="addProduto('Essência Lavanda Senamax',18)">Adicionar</button>
+        </div>
+      </div>
+    </div>
 
-</div>
+    <div class="produto">
+      <img src="img/essencia-eucalipto.jpg">
+      <h3>Essência Eucalipto</h3>
+      <div class="variacoes">
+        <div class="linha">
+          <span>Senalândia — R$ 15,00</span>
+          <button onclick="addProduto('Essência Eucalipto Senalândia',15)">Adicionar</button>
+        </div>
+        <div class="linha">
+          <span>Senamax — R$ 18,00</span>
+          <button onclick="addProduto('Essência Eucalipto Senamax',18)">Adicionar</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
  
  <div id="automotivo" class="categoria">
@@ -904,11 +906,21 @@ function toggleCarrinho(){
  document.getElementById("carrinho").classList.toggle("aberto");
 }
 
-function finalizar(){
- let msg="Ola! Gostaria de encomendar:%0A";
- carrinho.forEach(p=>msg+=`- ${p.nome} (${p.qtd}x)%0A`);
- msg+=`Total: R$ ${document.getElementById("total").innerText}`;
- window.open("https://wa.me/5515996585967?text="+msg);
+function enviarWhatsApp() {
+  let msg = "🛒 *Pedido – Furacão da Limpeza*%0A%0A";
+  msg += "Olá! Gostaria de fazer um pedido:%0A%0A";
+
+  carrinho.forEach(p => {
+    msg += `• ${p.nome} — ${p.qtd}x%0A`;
+  });
+
+  msg += `%0A💰 *Total:* R$ ${total.toFixed(2)}%0A`;
+  msg += `%0A📍 Aguardo retorno. Obrigado!`;
+
+  const telefone = "5511999999999"; // COLOQUE SEU NÚMERO AQUI
+  const url = `https://wa.me/${telefone}?text=${msg}`;
+
+  window.open(url, "_blank");
 }
 
 function mostrarCategoria(id,btn){
