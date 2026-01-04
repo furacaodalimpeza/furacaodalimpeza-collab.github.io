@@ -1091,9 +1091,8 @@ function enviarWhatsApp() {
 
   const numeroPedido = gerarNumeroPedido();
 
-  let msg = "🧾 *Pedido Nº " + numeroPedido + " – Furacão da Limpeza*%0A%0A";
+  let msg = "🧾 *Pedido Nº " + numeroPedido + " – 🌪️🛒Furacão da Limpeza*%0A%0A";
   msg += `👤 *Cliente:* ${nomeCliente}%0A`;
-  msg += `📦 *Posição na fila:* Pedido Nº ${numeroPedido}%0A%0A`;
   msg += "🛒 *Itens do pedido:*%0A";
 
   carrinho.forEach(p => {
@@ -1101,7 +1100,8 @@ function enviarWhatsApp() {
   });
 
   msg += `%0A💰 *Total:* R$ ${totalGeral.toFixed(2)}%0A%0A`;
-  msg += "📍 Aguardo confirmação. Obrigado!";
+  msg += "📍 📍 Assim que confirmar, preparamos tudo com carinho para você 🙏🏼✨
+";
 
   const telefone = "5515996585967";
   window.open(`https://wa.me/${telefone}?text=${msg}`,"_blank");
